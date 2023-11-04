@@ -1,4 +1,12 @@
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  FlatList,
+  Image,
+} from "react-native";
 import React, { useState } from "react";
 
 const Movie = () => {
@@ -32,6 +40,26 @@ const Movie = () => {
       <View style={styles.searchBtn}>
         <Button title="Search Movie" onPress={handleSearchBtn} />
       </View>
+      <View>
+        {movieList && (
+          <Text style={styles.heading}>{movieList?.length}Movies found</Text>
+        )}
+        <FlatList
+          data={movieList}
+          renderItem={({ item }) => {
+            return (
+              <View>
+                <Image
+                  style={{ height: 300, width: 300 }}
+                  source={{ uri: item.Poster }}
+                />
+                <Text style={styles.movieTitle}>{item.Title}</Text>
+                <Text style={styles.year}>Year: {item.Year}</Text>
+              </View>
+            );
+          }}
+        />
+      </View>
     </View>
   );
 };
@@ -40,7 +68,8 @@ export default Movie;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
+    marginTop: 90,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -56,5 +85,23 @@ const styles = StyleSheet.create({
     padding: 10,
     width: "50%",
     marginTop: 20,
+  },
+  movieTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "red",
+    fontStyle: "italic",
+  },
+  heading: {
+    fontSize: 30,
+    fontWeight: "bold",
+    color: "blue",
+    padding: 5,
+    marginBottom: 30,
+  },
+  year: {
+    color: "#4abf29",
+    fontWeight: "bold",
+    marginBottom: 20,
   },
 });
