@@ -3,13 +3,24 @@ import React, { useState } from "react";
 
 const Movie = () => {
   const [searchText, setSearchText] = useState("");
+  const [movieList, setMovieList] = useState();
   //   input change function
   const handleInputChange = (inputText) => {
     setSearchText(inputText);
   };
 
   //   handle button click
-  const handleSearchBtn = () => [console.log(searchText)];
+  const handleSearchBtn = async () => {
+    console.log(searchText);
+    let res =
+      await fetch(`http://www.omdbapi.com/?apikey=a1c5ced4&s=${searchText}
+
+    `);
+    let movieData = await res.json();
+    console.log(movieData.Search);
+    setMovieList(movieData.Search);
+  };
+
   return (
     <View style={styles.container}>
       <TextInput
